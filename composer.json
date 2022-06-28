@@ -1,0 +1,11 @@
+{
+    "name": "alireza/untitled",
+    "autoload": {
+        "psr-4": {
+            "Alireza\\Untitled\\": "."
+        }
+    },
+    "require": {
+        "vlucas/phpdotenv": "^5.4"
+    }
+}
