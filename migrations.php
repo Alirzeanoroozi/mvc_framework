@@ -1,8 +1,7 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-use Alireza\Untitled\controllers\AuthController;
-use Alireza\Untitled\controllers\SiteController;
+
 use Alireza\Untitled\core\Application;
 
 

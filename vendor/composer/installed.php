@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'alireza/untitled',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'c2e7358fd27f43ebe0c9a8d2314548b57084bdc8',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'alireza/untitled' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'c2e7358fd27f43ebe0c9a8d2314548b57084bdc8',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

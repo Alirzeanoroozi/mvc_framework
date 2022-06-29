@@ -24,7 +24,12 @@ class Field
             %s
         </div>
         </div>
-        ', $this->attribute, $this->attribute, $this->model->{$this->attribute}, $this->model->hasError($this->attribute) ? ' is-invalid': '',
-        $this->model->getFirstError($this->attribute));
+        ',
+            $this->model->label()[$this->attribute] ?? $this->attribute,
+            $this->attribute,
+            $this->model->{$this->attribute},
+            $this->model->hasError($this->attribute) ? ' is-invalid': '',
+            $this->model->getFirstError($this->attribute)
+        );
     }
 }

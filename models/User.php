@@ -18,6 +18,8 @@ class User extends DBModel
     public string $password = '';
     public string $confirmPassword = '';
 
+
+
     public function tableName(): string
     {
         return 'users';
@@ -45,5 +47,22 @@ class User extends DBModel
     public function attributes(): array
     {
         return ['firstname', 'lastname', 'email', 'password', 'status'];
+    }
+
+    public function label(): array
+    {
+        return [
+            'firstname' => 'First Name',
+            'lastname' => ' Last Name',
+            'email' => 'Email',
+            'password' => 'Password',
+            'confirmPassword' => 'Confirm password',
+            'match' => 'Password'
+        ];
+    }
+
+    public static function primaryKey(): string
+    {
+        return 'id';
     }
 }

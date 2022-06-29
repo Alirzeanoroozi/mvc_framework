@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="/css/bootstrap.css">
+
     <title>FrameWork</title>
 </head>
 <body>
@@ -40,6 +40,10 @@
 <div class="container">
     <?php
     use Alireza\Untitled\core\Application;
+    echo '<pre>';
+    var_dump(Application::$app->user);
+    echo '</pre>';
+
     if (Application::$app->session->getFlash('success')):
     ?>
     <div class = "alert alert-success">
