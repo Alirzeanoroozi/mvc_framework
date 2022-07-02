@@ -17,7 +17,6 @@ class Application
     public ?DBModel $user;
 
     public function __construct($rootPath, $config){
-        $this->userClass = $config['userClass'];
         self::$Root_DIR = $rootPath;
         self::$app = $this;
         $this->response = new Response();
@@ -25,20 +24,31 @@ class Application
         $this->controller = new Controller();
         $this->session = new session();
         $this->router = new Router($this->request, $this->response);
+
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
         if($primaryValue){
-            $primaryKey = ($this->userClass)::primaryKey();
-            $this->user = ($this->userClass)::findOne([$primaryKey => $primaryValue]);
+            $primaryKey = User::primaryKey();
+            $this->user = (new User())->findOne([$primaryKey => $primaryValue]);
         }else{
             $this->user = null;
         }
 
     }
 
+    public static function isGuest()
+    {
+        return !self::$app->user;
+    }
+
     public function run(){
-        echo $this -> router -> resolve();
+        try{
+            echo $this -> router -> resolve();
+        }catch (\Exception $e){
+            echo $this->router->renderView('_404');
+        }
+
     }
 
     public function login(DBModel $user)

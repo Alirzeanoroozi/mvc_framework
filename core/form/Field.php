@@ -8,9 +8,11 @@ class Field
 {
     public Model $model;
     public string $attribute;
+    private string $type;
 
-    public function __construct(Model $model, string $attribute)
+    public function __construct(Model $model, string $attribute, string $type = "text")
     {
+        $this->type = $type;
         $this->model = $model;
         $this->attribute = $attribute;
     }
@@ -18,14 +20,15 @@ class Field
     {
         return sprintf('
         <div class="form-group">
-        <label>%s<label>
-        <input type="text" name="%s" value="%s" class="form-control%s">
-        <div class="invalid-feedback">
-            %s
-        </div>
+            <label>%s</label>
+            <input type="%s" name="%s" value="%s" class="form-control%s">
+            <div class="invalid-feedback">
+                %s
+            </div>
         </div>
         ',
             $this->model->label()[$this->attribute] ?? $this->attribute,
+            $this->type,
             $this->attribute,
             $this->model->{$this->attribute},
             $this->model->hasError($this->attribute) ? ' is-invalid': '',

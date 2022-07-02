@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-
     <title>FrameWork</title>
 </head>
 <body>
@@ -27,23 +26,35 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
+            <?php use Alireza\Untitled\core\Application;
+
+            if(Application::isGuest()): ?>
             <li class="nav-item active">
                 <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/register">Register</a>
             </li>
+
+            <?php else: ?>
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Logout <?=
+                    Application::$app->user->firstname.
+                    " ".
+                    Application::$app->user->lastname
+                    ?>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/profile">profile</a>
+            </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>
 
 <div class="container">
     <?php
-    use Alireza\Untitled\core\Application;
-    echo '<pre>';
-    var_dump(Application::$app->user);
-    echo '</pre>';
-
     if (Application::$app->session->getFlash('success')):
     ?>
     <div class = "alert alert-success">

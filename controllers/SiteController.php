@@ -12,6 +12,14 @@ class SiteController extends Controller
         return $this->render('contact');
     }
 
+
+
+    public function editProfile()
+    {
+        return $this->render('editProfile');
+    }
+
+
     public function home()
     {
         $params= [

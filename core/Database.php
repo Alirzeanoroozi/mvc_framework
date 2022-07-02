@@ -63,7 +63,7 @@ class Database
                                     id int auto_increment primary key,
                                     migration varchar(255),
                                     created_at TIMESTAMP Default Current_Timestamp) 
-                                Engine=INNODB;");
+                                ;");
     }
 
     public function prepare($sql)

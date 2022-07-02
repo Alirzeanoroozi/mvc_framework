@@ -4,6 +4,7 @@ namespace Alireza\Untitled\controllers;
 
 use Alireza\Untitled\core\Application;
 use Alireza\Untitled\core\Controller;
+use Alireza\Untitled\core\middlewares\AuthMiddleware;
 use Alireza\Untitled\core\Request;
 use Alireza\Untitled\core\Response;
 use Alireza\Untitled\models\LoginForm;
@@ -11,6 +12,12 @@ use Alireza\Untitled\models\User;
 
 class AuthController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->registerMiddleware(new AuthMiddleware(['profile']));
+    }
+
     public function login(Request $request, Response $response)
     {
         $this->setLayout("auth");
@@ -18,8 +25,9 @@ class AuthController extends Controller
         if($request->isPost()){
             $loginForm->loadData($request->getBody());
             if($loginForm->validate() && $loginForm->login()){
+                $name = Application::$app->user->firstname. " ".Application::$app->user->lastname;
+                Application::$app->session->setFlash('success', "welcome $name");
                 $response->redirect('/');
-                return;
             }
         }
         return $this->render('login', ['model' => $loginForm]);
@@ -39,4 +47,16 @@ class AuthController extends Controller
         }
         return $this->render('register', ['model' => $user]);
     }
+
+    public function logout()
+    {
+        Application::$app->logout();
+        Application::$app->response->redirect("/");
+    }
+
+    public function profile()
+    {
+        return $this->render('profile');
+    }
+
 }

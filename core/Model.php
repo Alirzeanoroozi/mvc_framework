@@ -53,10 +53,6 @@ abstract class Model
                     $this->addErrorForRule($attribute, self::RULE_MAX, $rule);
                 }
                 if ($ruleName === self::RULE_MATCH && $value !== $this->{$rule['match']}){
-//                    echo '<pre>';
-//                    var_dump($value, $this, $this->{$rule['match']}, $rule['match']);
-//                    echo '</pre>';
-//                    exit;
                     $rule['match'] = $this->label()[$ruleName];
                     $this->addErrorForRule($attribute, self::RULE_MATCH, $rule);
                 }
@@ -69,7 +65,6 @@ abstract class Model
                     $statement->execute();
                     $record = $statement -> fetchObject();
                     if ($record){
-
                         $this->addErrorForRule($attribute, self::RULE_UNIQUE, ['field' => $this->label()[$attribute]] ?? $attribute);
                     }
 
