@@ -1,3 +1,6 @@
+<?php
+$this->title = "Contact"
+?>
 <h1>Contact Us</h1>
 <br>
 <form action="" method="post">

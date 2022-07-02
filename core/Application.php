@@ -6,6 +6,7 @@ use Alireza\Untitled\models\User;
 
 class Application
 {
+    public View $view;
     public Router $router;
     public Request $request;
     public Response $response;
@@ -24,7 +25,7 @@ class Application
         $this->controller = new Controller();
         $this->session = new session();
         $this->router = new Router($this->request, $this->response);
-
+        $this->view = new View();
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
@@ -46,7 +47,7 @@ class Application
         try{
             echo $this -> router -> resolve();
         }catch (\Exception $e){
-            echo $this->router->renderView('_404');
+            echo $this->view->renderView('_404');
         }
 
     }
