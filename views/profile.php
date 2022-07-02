@@ -1,5 +1,8 @@
 <h1>Profile</h1>
 <?php
+
+use Alireza\Untitled\core\Application;
+
 $this->title = "Profile"
 ?>
     <div class="container py-5 h-100">
@@ -8,13 +11,8 @@ $this->title = "Profile"
                 <div class="card" style="border-radius: 15px;">
                     <div class="card-body p-4">
                         <div class="d-flex text-black">
-<!--                            <div class="flex-shrink-0">-->
-<!--                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"-->
-<!--                                     alt="Generic placeholder image" class="img-fluid"-->
-<!--                                     style="width: 180px; border-radius: 10px;">-->
-<!--                            </div>-->
                             <div class="flex-grow-1 ms-3">
-                                <h5 class="mb-1"><?= \Alireza\Untitled\core\Application::$app->user->firstname." ".\Alireza\Untitled\core\Application::$app->user->lastname?></h5>
+                                <h5 class="mb-1"><?= Application::$app->user->firstname." ". Application::$app->user->lastname?></h5>
                                 <p class="mb-2 pb-1" style="color: #2b2a2a;">Senior Journalist</p>
                                 <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
                                      style="background-color: #efefef;">
@@ -32,7 +30,11 @@ $this->title = "Profile"
                                     </div>
                                 </div>
                                 <div class="d-flex pt-1">
-                                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Edit</button>
+                                    <a href="/editProfile">
+                                        <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">
+                                            Edit
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

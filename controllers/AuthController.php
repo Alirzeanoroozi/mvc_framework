@@ -15,7 +15,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->registerMiddleware(new AuthMiddleware(['profile']));
+        $this->registerMiddleware(new AuthMiddleware(['profile', 'editProfile']));
     }
 
     public function login(Request $request, Response $response)
@@ -57,6 +57,11 @@ class AuthController extends Controller
     public function profile()
     {
         return $this->render('profile');
+    }
+
+    public function editProfile()
+    {
+        return $this->render('editProfile');
     }
 
 }

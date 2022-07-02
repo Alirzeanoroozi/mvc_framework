@@ -23,7 +23,6 @@ $config = [
 $app = new Application(__DIR__. '\\..', $config);
 
 
-
 $app->router->get('/', [SiteController::class, 'home']);
 
 $app->router->get('/contact', [SiteController::class, 'contact']);
@@ -38,6 +37,6 @@ $app->router->post('/register', [AuthController::class, 'register']);
 $app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->router->get('/profile', [AuthController::class, 'profile']);
-$app->router->get('/editProfile', [SiteController::class, 'editProfile']);
+$app->router->get('/editProfile', [AuthController::class, 'editProfile']);
 
 $app -> run();

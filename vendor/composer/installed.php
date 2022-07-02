@@ -3,7 +3,7 @@
         'name' => 'alireza/untitled',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c2e7358fd27f43ebe0c9a8d2314548b57084bdc8',
+        'reference' => 'cb12341e4f94bc581ec6039ce61f6f9ba91f37c5',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'alireza/untitled' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c2e7358fd27f43ebe0c9a8d2314548b57084bdc8',
+            'reference' => 'cb12341e4f94bc581ec6039ce61f6f9ba91f37c5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

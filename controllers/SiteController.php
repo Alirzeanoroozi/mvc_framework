@@ -14,10 +14,7 @@ class SiteController extends Controller
 
 
 
-    public function editProfile()
-    {
-        return $this->render('editProfile');
-    }
+
 
 
     public function home()
