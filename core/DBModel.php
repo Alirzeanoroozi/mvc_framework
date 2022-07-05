@@ -33,6 +33,7 @@ abstract class DBModel extends Model
             $statement->bindValue(":$key", $item);
         }
         $statement->execute();
+
         return $statement->fetchObject(static::class);
     }
 

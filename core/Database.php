@@ -47,7 +47,6 @@ class Database
             $instance->up();
             echo "Applied migration $migration".PHP_EOL;
             $newMigrations[] = $migration;
-
         }
 
         if (!empty($newMigrations)){

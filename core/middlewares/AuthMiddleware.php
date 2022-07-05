@@ -5,7 +5,7 @@ namespace Alireza\Untitled\core\middlewares;
 use Alireza\Untitled\core\Application;
 use Alireza\Untitled\core\exception\ForbiddenException;
 
-class AuthMiddleware extends BaseMiddleware
+class AuthMiddleware
 {
     public array $actions = [];
     public function __construct(array $actions = [])

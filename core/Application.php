@@ -29,13 +29,12 @@ class Application
         $this->db = new Database($config['db']);
 
         $primaryValue = $this->session->get('user');
-        if($primaryValue){
-            $primaryKey = User::primaryKey();
+        $primaryKey = User::primaryKey();
+        if((new User())->findOne([$primaryKey => $primaryValue])){
             $this->user = (new User())->findOne([$primaryKey => $primaryValue]);
         }else{
             $this->user = null;
         }
-
     }
 
     public static function isGuest()
@@ -49,7 +48,6 @@ class Application
         }catch (\Exception $e){
             echo $this->view->renderView('_404');
         }
-
     }
 
     public function login(DBModel $user)

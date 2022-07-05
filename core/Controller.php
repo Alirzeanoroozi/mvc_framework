@@ -2,6 +2,7 @@
 
 namespace Alireza\Untitled\core;
 
+use Alireza\Untitled\core\middlewares\AuthMiddleware;
 use Alireza\Untitled\core\middlewares\BaseMiddleware;
 
 class Controller
@@ -22,7 +23,7 @@ class Controller
     }
 
 
-    public function registerMiddleware(BaseMiddleware $middleware)
+    public function registerMiddleware(AuthMiddleware $middleware)
     {
         $this->middlewares[] = $middleware;
 

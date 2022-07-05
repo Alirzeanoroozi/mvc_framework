@@ -48,6 +48,15 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/profile">profile</a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/post_page">write</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/list">list</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/search">search</a>
+            </li>
             <?php endif; ?>
         </ul>
     </div>

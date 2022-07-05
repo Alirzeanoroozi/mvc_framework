@@ -35,4 +35,38 @@ class Field
             $this->model->getFirstError($this->attribute)
         );
     }
+
+    public function renderInput()
+    {
+        return sprintf('        
+        <div class="form-group">
+            <label>%s</label>
+            <textarea class="form-control%s" name="%s">%s</textarea>
+        </div>',
+            $this->model->label()[$this->attribute] ?? $this->attribute,
+            $this->model->hasError($this->attribute) ? ' is-invalid' : '',
+            $this->attribute,
+            $this->model->{$this->attribute},
+        );
+    }
+
+    public function renderOutput()
+    {
+        return sprintf('
+        <div class="form-group">
+            <label>%s</label>
+            <input type="%s" name="%s" value="%s" class="form-control%s">
+            <div class="invalid-feedback">
+                %s
+            </div>
+        </div>
+        ',
+            $this->model->label()[$this->attribute] ?? $this->attribute,
+            $this->type,
+            $this->attribute,
+            $this->model->{$this->attribute},
+            $this->model->hasError($this->attribute) ? ' is-invalid': '',
+            $this->model->getFirstError($this->attribute)
+        );
+    }
 }
