@@ -4,7 +4,6 @@ namespace Alireza\Untitled\models;
 
 use Alireza\Untitled\core\Application;
 use Alireza\Untitled\core\DBModel;
-use Alireza\Untitled\core\Model;
 
 class WriteForm extends DBModel
 {

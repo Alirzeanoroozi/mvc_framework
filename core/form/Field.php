@@ -16,6 +16,7 @@ class Field
         $this->model = $model;
         $this->attribute = $attribute;
     }
+
     public function __toString()
     {
         return sprintf('
@@ -47,26 +48,6 @@ class Field
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->attribute,
             $this->model->{$this->attribute},
-        );
-    }
-
-    public function renderOutput()
-    {
-        return sprintf('
-        <div class="form-group">
-            <label>%s</label>
-            <input type="%s" name="%s" value="%s" class="form-control%s">
-            <div class="invalid-feedback">
-                %s
-            </div>
-        </div>
-        ',
-            $this->model->label()[$this->attribute] ?? $this->attribute,
-            $this->type,
-            $this->attribute,
-            $this->model->{$this->attribute},
-            $this->model->hasError($this->attribute) ? ' is-invalid': '',
-            $this->model->getFirstError($this->attribute)
         );
     }
 }

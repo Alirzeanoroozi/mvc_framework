@@ -11,7 +11,6 @@ abstract class Model
     public const RULE_MATCH = 'match';
     public const RULE_UNIQUE = 'unique';
 
-
     public function loadData($data)
     {
         foreach ($data as $key => $value){
@@ -20,7 +19,6 @@ abstract class Model
             }
         }
     }
-
 
     abstract public function rules();
 
@@ -60,7 +58,7 @@ abstract class Model
                     $className = $rule['class'];
                     $uniqueAttr = $rule['attribute'] ?? $attribute;
                     $tableName = $className::tableName();
-                    $statement = Application::$app->db->prepare("SELECT * From $tableName WHERE $uniqueAttr = :attr");
+                    $statement = Application::$app->db->pdo->prepare("SELECT * From $tableName WHERE $uniqueAttr = :attr");
                     $statement->bindValue(":attr", $value);
                     $statement->execute();
                     $record = $statement -> fetchObject();

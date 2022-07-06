@@ -34,7 +34,6 @@ class Router
             return Application::$app->view->renderView($callback);
         }
         if (is_array($callback)){
-
             $controller = new $callback[0];
             Application::$app->controller = $controller;
             $controller->action = $callback[1];

@@ -14,12 +14,9 @@ class Database
         $dsn = $config['dsn'] ?? '';
         $user = $config['user'] ?? '';
         $password = $config['password'] ?? '';
-
-
         try {
             $this->pdo = new PDO($dsn, $user, $password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//            echo "Connected successfully";
         } catch(PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
         }
@@ -61,20 +58,13 @@ class Database
         $this->pdo->exec("Create Table if Not EXISTS migrations(
                                     id int auto_increment primary key,
                                     migration varchar(255),
-                                    created_at TIMESTAMP Default Current_Timestamp) 
-                                ;");
-    }
-
-    public function prepare($sql)
-    {
-        return $this->pdo->prepare($sql);
+                                    created_at TIMESTAMP Default Current_Timestamp);");
     }
 
     private function getAppliedMigrations()
     {
         $statement = $this->pdo->prepare("SELECT migration From migrations");
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_COLUMN);
     }
 

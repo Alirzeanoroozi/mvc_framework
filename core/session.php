@@ -49,7 +49,6 @@ class session
     public function get(string $key)
     {
         return $_SESSION[$key] ?? false;
-
     }
 
     public function remove(string $key)

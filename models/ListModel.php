@@ -12,7 +12,7 @@ class ListModel extends Model
     public int $inscription_id = 0;
     public int $author_id = 0;
 
-    public function rules()
+    public function rules() :array
     {
         return [];
     }
@@ -29,32 +29,80 @@ class ListModel extends Model
 
     public function search()
     {
-        $user = (new User)->findOne(['email' => $this->email]);
-        if(!$user){
-            $this->addError('email', 'User Does Not Exists');
-            return false;
-        }
+        $statement = Application::$app->db->pdo->prepare("Select * from inscriptions");
+        $statement->execute();
+        $allQueries = $statement->fetchAll();
+        $searchQueries = [];
 
-        if(!password_verify($this->password, $user->password)){
-            $this->addError('password', 'Password is incorrect');
-            return false;
+        //name of author
+        if($this->author_name != ""){
+            foreach($allQueries as $query){
+                $author = (new User)->findOne([User::primaryKey()=>$query["author_id"]]);
+                if ($author->firstname == $this->author_name){
+                    $searchQueries[] = $query;
+                }
+            }
+            $allQueries = $searchQueries;
+            $searchQueries = [];
         }
-
-        return Application::$app->login($user);
+        //subject
+        if($this->subject != ""){
+            foreach($allQueries as $query){
+                if ($query["subject"] == $this->subject){
+                    $searchQueries[] = $query;
+                }
+            }
+            $allQueries = $searchQueries;
+            $searchQueries = [];
+        }
+        //id_inscription
+        if($this->inscription_id !== 0){
+            foreach($allQueries as $query){
+                if ($query["id"] === $this->inscription_id){
+                    $searchQueries[] = $query;
+                }
+            }
+            $allQueries = $searchQueries;
+            $searchQueries = [];
+        }
+        //author_id
+        if($this->author_id != 0){
+            foreach($allQueries as $query){
+                if ($query["author_id"] == $this->author_id){
+                    $searchQueries[] = $query;
+                }
+            }
+            $allQueries = $searchQueries;
+        }
+        $outputText = '<table border=\'1\' cellpadding=\'15\'><thead><tr><th><h1>id</h1></th><th><h1>Subject</h1></th><th><h1>Author</h1></th><th><h1>Content</h1></th><th><h1>Actions</h1></th></tr></thead><tbody>';
+        foreach ($allQueries as $inscription){
+            $author = (new User)->findOne([User::primaryKey()=>$inscription["author_id"]]);
+            $id = $inscription["id"];
+            $author_id = $inscription["author_id"];
+            $outputText = $outputText. '<tr><th>'. $inscription["id"]. '</th><th>'. $inscription["subject"]. '</th><th><a href="/profile?=$author_id">'. $author->firstname. '</a></th><th>'. $inscription["content"]. '</th><th>'. "<a href=\"view?id=$id\">View</a><a href=\"edit?id=$id\">Edit</a><a href=\"delete?id=$id\">Delete</a>". '</th></tr>';
+        }
+        return $outputText."</tbody></table>";
     }
 
-
-
-    public static function print()
+    public static function print($page)
     {
         $statement = Application::$app->db->pdo->prepare("Select * from inscriptions");
         $statement->execute();
-        $outputText = '<table border=\'1\' cellpadding=\'15\'><thead><tr><th><h1>id</h1></th><th><h1>Subject</h1></th><th><h1>Author</h1></th><th><h1>Content</h1></th><th><h1>Actions</h1></th></tr></thead><tbody>';
-        foreach ($statement->fetchAll() as $inscription){
+        $allQueries = $statement->fetchAll();
+        $inscriptions = array_slice($allQueries, 5 * $page, 5);
+        $outputText = "";
+        $outputText = $outputText.'<table border=\'1\' cellpadding=\'15\'><thead><tr><th><h1>id</h1></th><th><h1>Subject</h1></th><th><h1>Author</h1></th><th><h1>Content</h1></th><th><h1>Actions</h1></th></tr></thead><tbody>';
+
+        foreach ($inscriptions as $inscription){
             $author = (new User)->findOne([User::primaryKey()=>$inscription["author_id"]]);
             $id = $inscription["id"];
-            $outputText = $outputText. '<tr><th>'. $inscription["id"]. '</th><th>'. $inscription["subject"]. '</th><th>'. $author->firstname. '</th><th>'. $inscription["content"]. '</th><th>'. "<a href=\"view?id=$id\">View</a><a href=\"edit?id=$id\">Edit</a><a href=\"delete?id=$id\">Delete</a>". '</th></tr>';
+            $author_id = $inscription["author_id"];
+            $outputText = $outputText. '<tr><th>'. $inscription["id"]. '</th><th>'. $inscription["subject"]. '</th><th><a href="/profile?=$author_id">'. $author->firstname. '</a></th><th>'. $inscription["content"]. '</th><th>'. "<a href=\"view?id=$id\"><span>&#9956;</span></a><a href=\"edit?id=$id\"><span>&#9999;</span></a><a href=\"delete?id=$id\"><span>&#9940;</span></a>". '</th></tr>';
         }
-        return $outputText."</tbody></table>";
+        $outputText = $outputText."</tbody></table><div>";
+        for($i=0; 5 * $i < count($allQueries); $i += 1){
+            $outputText = $outputText."<a href='/list?page=$i'>$i </a>";
+        }
+        return $outputText."</div>";
     }
 }

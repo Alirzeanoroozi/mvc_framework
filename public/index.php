@@ -38,6 +38,7 @@ $app->router->get('/list', [AuthController::class, 'list']);
 $app->router->get('/delete', [AuthController::class, 'delete']);
 $app->router->get('/view', [AuthController::class, 'view']);
 $app->router->get('/edit', [AuthController::class, 'edit']);
+$app->router->post('/edit', [AuthController::class, 'edit']);
 
 $app->router->get('/search', [AuthController::class, 'search']);
 $app->router->post('/search', [AuthController::class, 'search']);

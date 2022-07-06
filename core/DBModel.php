@@ -1,7 +1,5 @@
 <?php
-
 namespace Alireza\Untitled\core;
-
 abstract class DBModel extends Model
 {
     abstract public function tableName(): string;
@@ -10,12 +8,11 @@ abstract class DBModel extends Model
 
     abstract static public function primaryKey(): string;
 
-
     public function save(){
         $tableName = $this->tableName();
         $attributes = $this->attributes();
         $params = array_map(fn($attr) => ":$attr", $attributes);
-        $statement  = self::prepare("Insert into $tableName (".implode(',', $attributes).") values (".implode(',', $params).")");
+        $statement  = Application::$app->db->pdo->prepare("Insert into $tableName (".implode(',', $attributes).") values (".implode(',', $params).")");
         foreach ($attributes as $attribute){
             $statement->bindValue(":$attribute", $this->{$attribute});
         }
@@ -28,16 +25,12 @@ abstract class DBModel extends Model
         $tableName = $this->tableName();
         $attributes = array_keys($where);
         $sql = implode('And ', array_map(fn($attr) => "$attr = :$attr", $attributes));
-        $statement  = self::prepare("Select * from $tableName where $sql");
+        $statement  = Application::$app->db->pdo->prepare("Select * from $tableName where $sql");
         foreach ($where as $key => $item){
             $statement->bindValue(":$key", $item);
         }
         $statement->execute();
-
         return $statement->fetchObject(static::class);
     }
 
-    public static function prepare($sql){
-        return Application::$app->db->pdo->prepare($sql);
-    }
 }

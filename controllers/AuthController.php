@@ -7,6 +7,7 @@ use Alireza\Untitled\core\Controller;
 use Alireza\Untitled\core\middlewares\AuthMiddleware;
 use Alireza\Untitled\core\Request;
 use Alireza\Untitled\core\Response;
+use Alireza\Untitled\models\EditModel;
 use Alireza\Untitled\models\ListModel;
 use Alireza\Untitled\models\LoginForm;
 use Alireza\Untitled\models\User;
@@ -14,7 +15,6 @@ use Alireza\Untitled\models\WriteForm;
 
 class AuthController extends Controller
 {
-
     public function __construct()
     {
         $this->registerMiddleware(new AuthMiddleware(['profile', 'editProfile']));
@@ -22,13 +22,12 @@ class AuthController extends Controller
 
     public function login(Request $request, Response $response)
     {
-//        $this->setLayout("auth");
         $loginForm = new LoginForm();
         if($request->isPost()){
             $loginForm->loadData($request->getBody());
             if($loginForm->validate() && $loginForm->login()){
                 $name = Application::$app->user->firstname. " ".Application::$app->user->lastname;
-                Application::$app->session->setFlash('success', "welcome $name");
+                Application::$app->session->setFlash('welcome', "welcome $name");
                 $response->redirect('/');
             }
         }
@@ -50,7 +49,6 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-//        $this->setLayout("auth");
         $user = new User();
         if($request->isPost()){
             $user->loadData($request->getBody());
@@ -94,9 +92,13 @@ class AuthController extends Controller
         return $this->render('editProfile');
     }
 
-    public function list()
+    public function list(Request $request)
     {
-        return $this->render('list');
+        $page = key_exists("page", $request->getBody()) ? $request->getBody()["page"] : 0;
+        $params = [
+            "page" => $page
+        ];
+        return $this->render('list', $params);
     }
 
     public function contact()
@@ -147,16 +149,27 @@ class AuthController extends Controller
         return $this->render('view', $params);
     }
 
-    public function search(Request $request, Response $response)
+    public function edit(Request $request, Response $response)
+    {
+        $editModel = new EditModel();
+        $editModel->loadData($request->getBody());
+        $editModel->fillData();
+        if($request->isPost()){
+            $editModel->loadData($request->getBody());
+            if($editModel->update()){
+                Application::$app->session->setFlash('success', "your text successfully updated!");
+                $response->redirect('/list');
+            }
+        }
+        return $this->render('editPage', ['model' => $editModel]);
+    }
+
+    public function search(Request $request)
     {
         $listModel = new ListModel();
         if($request->isPost()){
-            $loginForm->loadData($request->getBody());
-            if($loginForm->validate() && $loginForm->login()){
-                $name = Application::$app->user->firstname. " ".Application::$app->user->lastname;
-                Application::$app->session->setFlash('success', "welcome $name");
-                $response->redirect('/');
-            }
+            $listModel->loadData($request->getBody());
+            $listModel->search();
         }
         return $this->render('search', ['model' => $listModel]);
     }

@@ -10,7 +10,7 @@ $this->title = "List";
 
 use Alireza\Untitled\models\ListModel;
 
-echo ListModel::print();
+echo ListModel::print($page);
 
 ?>
 </section>
