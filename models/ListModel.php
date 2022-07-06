@@ -84,25 +84,4 @@ class ListModel extends Model
         return $outputText."</tbody></table>";
     }
 
-    public static function print($page)
-    {
-        $statement = Application::$app->db->pdo->prepare("Select * from inscriptions");
-        $statement->execute();
-        $allQueries = $statement->fetchAll();
-        $inscriptions = array_slice($allQueries, 5 * $page, 5);
-        $outputText = "";
-        $outputText = $outputText.'<table border=\'1\' cellpadding=\'15\'><thead><tr><th><h1>id</h1></th><th><h1>Subject</h1></th><th><h1>Author</h1></th><th><h1>Content</h1></th><th><h1>Actions</h1></th></tr></thead><tbody>';
-
-        foreach ($inscriptions as $inscription){
-            $author = (new User)->findOne([User::primaryKey()=>$inscription["author_id"]]);
-            $id = $inscription["id"];
-            $author_id = $inscription["author_id"];
-            $outputText = $outputText. '<tr><th>'. $inscription["id"]. '</th><th>'. $inscription["subject"]. '</th><th><a href="/profile?=$author_id">'. $author->firstname. '</a></th><th>'. $inscription["content"]. '</th><th>'. "<a href=\"view?id=$id\"><span>&#9956;</span></a><a href=\"edit?id=$id\"><span>&#9999;</span></a><a href=\"delete?id=$id\"><span>&#9940;</span></a>". '</th></tr>';
-        }
-        $outputText = $outputText."</tbody></table><div>";
-        for($i=0; 5 * $i < count($allQueries); $i += 1){
-            $outputText = $outputText."<a href='/list?page=$i'>$i </a>";
-        }
-        return $outputText."</div>";
-    }
 }

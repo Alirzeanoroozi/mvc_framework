@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Alireza\Untitled\controllers\AuthController;
@@ -44,7 +43,5 @@ $app->router->get('/search', [AuthController::class, 'search']);
 $app->router->post('/search', [AuthController::class, 'search']);
 
 $app->router->get('/profile', [AuthController::class, 'profile']);
-$app->router->get('/editProfile', [AuthController::class, 'editProfile']);
-
 
 $app -> run();
