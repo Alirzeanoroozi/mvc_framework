@@ -3,22 +3,16 @@
 namespace Alireza\Untitled\models;
 
 use Alireza\Untitled\core\Application;
-use Alireza\Untitled\core\DBModel;
 
 class EditModel extends DBModel
 {
     public int $id = 0;
     public string $subject = "";
     public string $content = "";
-    public int $userId = 0;
     public int $inscriptionAuthorId = 0;
 
-    public function fillData()
+    public function fillData($inscription)
     {
-        $this->userId = Application::$app->session->get('user');
-        $statement  = Application::$app->db->pdo->prepare("Select * from inscriptions where id='$this->id'");
-        $statement->execute();
-        $inscription = $statement->fetch();
         $this->subject = $inscription["subject"];
         $this->inscriptionAuthorId = $inscription["author_id"];
         $this->content = $inscription["content"];
@@ -52,11 +46,10 @@ class EditModel extends DBModel
         return 'id';
     }
 
-    public function update()
+    public function update(): void
     {
         $statement  = Application::$app->db->pdo->prepare("UPDATE inscriptions SET content = '$this->content', subject = '$this->subject' Where id = '$this->id'");
         $statement->execute();
-        return true;
     }
 
 }

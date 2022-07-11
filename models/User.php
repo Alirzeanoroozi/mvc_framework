@@ -2,9 +2,6 @@
 
 namespace Alireza\Untitled\models;
 
-use Alireza\Untitled\core\DBModel;
-use Alireza\Untitled\core\Model;
-
 class User extends DBModel
 {
     const STATUS_INACTIVE = 0;
@@ -17,8 +14,6 @@ class User extends DBModel
     public int $status = self::STATUS_INACTIVE;
     public string $password = '';
     public string $confirmPassword = '';
-
-
 
     public function tableName(): string
     {

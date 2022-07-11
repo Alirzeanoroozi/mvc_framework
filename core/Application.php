@@ -1,6 +1,10 @@
 <?php
 namespace Alireza\Untitled\core;
+use Alireza\Untitled\controllers\Controller;
+use Alireza\Untitled\models\DBModel;
 use Alireza\Untitled\models\User;
+use Alireza\Untitled\views\View;
+
 class Application
 {
     public static string $Root_DIR;

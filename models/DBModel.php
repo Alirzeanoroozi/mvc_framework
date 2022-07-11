@@ -1,5 +1,7 @@
 <?php
-namespace Alireza\Untitled\core;
+namespace Alireza\Untitled\models;
+use Alireza\Untitled\core\Application;
+
 abstract class DBModel extends Model
 {
     abstract public function tableName(): string;

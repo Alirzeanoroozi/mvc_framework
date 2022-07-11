@@ -1,12 +1,17 @@
 <?php
-$this->title = "Write";
+$this->title = "Post";
 use Alireza\Untitled\core\form\Form;
+use Alireza\Untitled\models\PostModel;
 
-echo $form = Form::begin('', 'post') ?>
+/** @var PostModel $model */
+?>
+<h1>Post</h1>
+<?php echo $form = Form::begin('', 'post') ?>
 
 <?php echo $form->field($model, 'subject')?>
 
 <?php echo $form->field($model, 'content')->renderInput()?>
+
 <button type="submit" class="btn btn-primary">Submit</button>
 
 <?php echo Form::end() ?>

@@ -1,6 +1,8 @@
 <?php
-namespace Alireza\Untitled\core;
+namespace Alireza\Untitled\controllers;
+use Alireza\Untitled\core\Application;
 use Alireza\Untitled\core\middlewares\AuthMiddleware;
+
 class Controller
 {
     public array $middlewares = [];

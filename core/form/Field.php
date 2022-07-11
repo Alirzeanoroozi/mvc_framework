@@ -2,7 +2,7 @@
 
 namespace Alireza\Untitled\core\form;
 
-use Alireza\Untitled\core\Model;
+use Alireza\Untitled\models\Model;
 
 class Field
 {

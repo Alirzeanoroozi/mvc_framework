@@ -3,9 +3,8 @@
 namespace Alireza\Untitled\models;
 
 use Alireza\Untitled\core\Application;
-use Alireza\Untitled\core\DBModel;
 
-class WriteForm extends DBModel
+class PostModel extends DBModel
 {
     public string $subject = "";
     public string $content = "";
@@ -45,7 +44,7 @@ class WriteForm extends DBModel
         return 'id';
     }
 
-    public function store()
+    public function store(): bool
     {
         return parent::save();
     }

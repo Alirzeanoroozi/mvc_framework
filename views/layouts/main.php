@@ -1,14 +1,10 @@
+<?php use Alireza\Untitled\core\Application;?>
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-
     <title><?php echo $this->title;?></title>
 </head>
 <body>
@@ -23,39 +19,27 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/contact">Contact</a>
-            </li>
-            <?php use Alireza\Untitled\core\Application;
-
-            if(Application::isGuest()): ?>
+            <?php if(Application::isGuest()): ?>
             <li class="nav-item active">
                 <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/register">Register</a>
             </li>
-
             <?php else: ?>
             <li class="nav-item active">
-                <a class="nav-link" href="/logout">Logout <?=
-                    Application::$app->user->firstname.
-                    " ".
-                    Application::$app->user->lastname
-                    ?>
+                <a class="nav-link" href="/logout">
+                    Logout <?= Application::$app->user->firstname. " ". Application::$app->user->lastname ?>
                 </a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/profile">profile</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/post_page">write</a>
+                <a class="nav-link" href="/post_page">post</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="/list">list</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/search">search</a>
             </li>
             <?php endif; ?>
         </ul>
@@ -63,9 +47,7 @@
 </nav>
 
 <div class="container">
-    <?php
-    if (Application::$app->session->getFlash('success')):
-    ?>
+    <?php if (Application::$app->session->getFlash('success')): ?>
     <div class = "alert alert-success">
         <?php echo Application::$app->session->getFlash('success') ?>
     </div>
@@ -73,8 +55,6 @@
     {{content}}
 </div>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

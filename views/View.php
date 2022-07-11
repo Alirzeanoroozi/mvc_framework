@@ -1,6 +1,8 @@
 <?php
 
-namespace Alireza\Untitled\core;
+namespace Alireza\Untitled\views;
+
+use Alireza\Untitled\core\Application;
 
 class View
 {

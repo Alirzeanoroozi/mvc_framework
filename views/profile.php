@@ -1,10 +1,5 @@
 <h1>Profile</h1>
-<?php
-
-use Alireza\Untitled\models\ProfileModel;
-
-$this->title = "Profile";
-?>
+<?php $this->title = "Profile"; ?>
 <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-md-9 col-lg-7 col-xl-5">
@@ -20,13 +15,17 @@ $this->title = "Profile";
                                     <p class="mb-0"><?= $inscriptionNumbers ?></p>
                                 </div>
                             </div>
-                            <?= ProfileModel::print($inscriptions) ?>
+                            <?php
+                            foreach ($inscriptions as $inscription){
+                                echo '<div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
+                                        <div> 
+                                            <p class="small text-muted mb-1">' . $inscription["id"] . ' '. $inscription["subject"]. '</p>
+                                            <p class="mb-0">'. $inscription["content"]. '</p>
+                                        </div>
+                                      </div>';
+                            }?>
                             <div class="d-flex pt-1">
-                                <a href="/editProfile">
-                                    <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">
-                                        Edit
-                                    </button>
-                                </a>
+                                <button type="button" class="btn btn-outline-primary me-1 flex-grow-1">Edit</button>
                             </div>
                         </div>
                     </div>
