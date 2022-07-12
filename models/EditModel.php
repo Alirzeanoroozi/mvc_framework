@@ -2,8 +2,6 @@
 
 namespace Alireza\Untitled\models;
 
-use Alireza\Untitled\core\Application;
-
 class EditModel extends DBModel
 {
     public int $id = 0;
@@ -45,11 +43,4 @@ class EditModel extends DBModel
     {
         return 'id';
     }
-
-    public function update(): void
-    {
-        $statement  = Application::$app->db->pdo->prepare("UPDATE inscriptions SET content = '$this->content', subject = '$this->subject' Where id = '$this->id'");
-        $statement->execute();
-    }
-
 }

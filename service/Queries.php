@@ -11,9 +11,8 @@ class Queries
      * @param $id
      * @return mixed
      */
-    public static function search($tableName, $id): mixed
+    public static function search($tableName, $id)
     {
-
         $statement = Application::$app->db->pdo->prepare("Select * from $tableName where id=$id");
         $statement->execute();
         return $statement->fetch();
@@ -35,7 +34,7 @@ class Queries
      * @param $id
      * @return array|false
      */
-    public static function searchAllAuthors($tableName, $id): array|false
+    public static function searchAllAuthors($tableName, $id)
     {
         $statement_ins = Application::$app->db->pdo->prepare("Select * from $tableName where author_id=$id");
         $statement_ins->execute();
@@ -46,7 +45,7 @@ class Queries
      * @param $text
      * @return bool|array
      */
-    public static function searchLike($text): bool|array
+    public static function searchLike($text)
     {
         $statement = Application::$app->db->pdo->prepare(
             "Select * from
@@ -55,6 +54,16 @@ class Queries
                 where (subject LIKE Binary '%$text%' OR content LIKE Binary '%$text%' OR firstname LIKE Binary '%$text%');");
         $statement->execute();
         return $statement->fetchAll();
+    }
+
+    /**
+     * @param $editModel
+     * @return void
+     */
+    public static function update($editModel): void
+    {
+        $statement  = Application::$app->db->pdo->prepare("UPDATE inscriptions SET content = '$editModel->content', subject = '$editModel->subject' Where id = '$editModel->id'");
+        $statement->execute();
     }
 
 }

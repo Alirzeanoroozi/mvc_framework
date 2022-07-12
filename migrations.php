@@ -1,13 +1,10 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-
 use Alireza\Untitled\core\Application;
-
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
-
 
 $config = [
     'db' => [
@@ -16,5 +13,6 @@ $config = [
         'password' => $_ENV['DB_PASSWORD']
     ]
 ];
+
 $app = new Application(__DIR__ . '\\..', $config);
 $app->db->applyMigrations();

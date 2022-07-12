@@ -8,49 +8,48 @@ use Alireza\Untitled\service\BlogService;
 
 class BlogController extends Controller
 {
-    public function profile(Request $request): array|bool|string
+    public function profile(Request $request)
     {
-        $params = BlogService::profileService($request);
+        $profileId = array_key_exists("id", $request->getBody()) ? $request->getBody()["id"] : Application::$app->user->id;
+        $params = BlogService::profileService($profileId);
         return $this->render('profile', $params);
     }
 
-    public function post(Request $request): array|bool|string
+    public function post(Request $request)
     {
         $return_array = BlogService::postService($request);
         if($return_array["post"]) {
             Application::$app->session->setFlash('success', "your text successfully stored!");
             Application::$app->response->redirect('/');
         }
-        return $this->render('post_page', ['model' => $return_array["model"]]);
+        return $this->render('post_page', $return_array);
     }
 
-    public function list(Request $request): array|bool|string
+    public function list(Request $request)
     {
-        return $this->render('list', BlogService::searchService($request));
+        return $this->render('list', BlogService::listService($request->getBody()));
     }
 
-    public function delete(Request $request): bool
+    public function delete(Request $request)
     {
-        BlogService::deleteService($request);
+        BlogService::deleteService($request->getBody()["id"]);
         Application::$app->session->setFlash('success', 'Inscription Deleted');
         Application::$app->response->redirect('/list');
         return true;
     }
 
-    public function view(Request $request): array|bool|string
+    public function view(Request $request)
     {
-        $params = BlogService::viewService($request);
-        return $this->render('viewPage', $params);
+        return $this->render('viewPage', BlogService::viewService($request->getBody()["id"]));
     }
 
-    public function edit(Request $request): array|bool|string
+    public function edit(Request $request)
     {
-        $return_array = BlogService::editService($request);
+        $return_array = BlogService::editService($request->getBody(), $request->isPost());
         if($return_array["post"]) {
             Application::$app->session->setFlash('success', "your text successfully updated!");
             Application::$app->response->redirect('/list');
         }
-        return $this->render('editPage', ['model' => $return_array["model"]]);
+        return $this->render('editPage', $return_array);
     }
-
 }

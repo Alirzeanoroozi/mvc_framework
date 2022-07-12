@@ -12,14 +12,13 @@ use Alireza\Untitled\models\PostModel;
 
 class BlogService
 {
-
     /**
-     * @param Request $request
+     * @param $id
      * @return array
      */
-    public static function viewService(Request $request): array
+    public static function viewService($id): array
     {
-        $inscription = Queries::search("inscriptions", $request->getBody()["id"]);
+        $inscription = Queries::search("inscriptions", $id);
         return
             [
                 "id" => $inscription["id"],
@@ -32,57 +31,59 @@ class BlogService
     }
 
     /**
-     * @param Request $request
+     * @param $id
      * @return void
      */
-    public static function deleteService(Request $request): void
+    public static function deleteService($id): void
     {
-        Queries::delete("inscriptions", $request->getBody()["id"]);
+        Queries::delete("inscriptions", $id);
     }
 
     /**
-     * @param Request $request
+     * @param $data
+     * @param $isPost
      * @return array
      */
-    public static function editService(Request $request): array
+    public static function editService($data, $isPost): array
     {
         $editModel = new EditModel();
-        $editModel->loadData($request->getBody());
-
+        $editModel->loadData($data);
         $editModel->fillData(Queries::search("inscriptions", $editModel->id));
 
-        if($request->isPost()){
-            $editModel->loadData($request->getBody());
-            $editModel->update();
+        if($isPost){
+            $editModel->loadData($data);
+            Queries::update($editModel);
             return ["post" => true, "model" => $editModel];
         }
         return ["post" => false, "model" => $editModel];
     }
 
     /**
-     * @param Request $request
+     * @param $requestData
      * @return array
      */
-    public static function searchService(Request $request): array
+    public static function listService($requestData): array
     {
-        $page = key_exists("page", $request->getBody()) ? $request->getBody()["page"] : 0;
-        $searchInput = key_exists("searchInput", $request->getBody()) ? $request->getBody()["searchInput"] : '';
+        $page = key_exists("page", $requestData) ? $requestData["page"] : 0;
+        $searchInput = key_exists("searchInput", $requestData) ? $requestData["searchInput"] : '';
         $listModel = new ListModel();
-        $listModel->loadData($request->getBody());
-        return ['model' => $listModel, 'inscriptions' => Queries::searchLike($searchInput), "page" => $page, 'searchInput' => $searchInput];
+        $listModel->loadData($requestData);
+        return [
+            'model' => $listModel,
+            'inscriptions' => Queries::searchLike($searchInput),
+            "page" => $page,
+            'searchInput' => $searchInput
+        ];
     }
 
     /**
-     * @param Request $request
+     * @param $id
      * @return array
      */
-    public static function profileService(Request $request): array
+    public static function profileService($id): array
     {
-        $profileId = array_key_exists("id", $request->getBody()) ? $request->getBody()["id"] : Application::$app->user->id;
-        $author = Queries::search("users", $profileId);
-
-        $inscriptions = Queries::searchAllAuthors("inscriptions",$profileId);
-
+        $author = Queries::search("users", $id);
+        $inscriptions = Queries::searchAllAuthors("inscriptions",$id);
         return [
             "id" => $author["id"],
             "firstname" => $author["firstname"],
@@ -92,27 +93,6 @@ class BlogService
         ];
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public static function registerService(Request $request)
-    {
-        $user = new User();
-        if($request->isPost()){
-            $user->loadData($request->getBody());
-            if ($user->validate() && $user->save()){
-                return [
-                  "post" => true,
-                  "model" => $user
-                ];
-            }
-        }
-        return [
-            "post" => false,
-            "model" => $user
-        ];
-    }
 
     /**
      * @param Request $request
@@ -124,37 +104,11 @@ class BlogService
         if($request->isPost()){
             $postModel->loadData($request->getBody());
             if($postModel->store()){
-                return [
-                    "post" => true,
-                    "model" => $postModel
-                ];
+                return ["post" => true, "model" => $postModel];
             }
         }
-        return [
-            "post" => false,
-            "model" => $postModel
-        ];
+        return ["post" => false, "model" => $postModel];
     }
 
-    /**
-     * @param Request $request
-     * @return array
-     */
-    public static function loginService(Request $request)
-    {
-        $loginModel = new LoginModel();
-        if($request->isPost()){
-            $loginModel->loadData($request->getBody());
-            if($loginModel->validate() && $loginModel->login()){
-                return [
-                    "post" => true,
-                    "model" => $loginModel
-                ];
-            }
-        }
-        return [
-            "post" => false,
-            "model" => $loginModel
-        ];
-    }
+
 }

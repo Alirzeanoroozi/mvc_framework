@@ -13,10 +13,6 @@ class ListModel extends Model
 
     public function label() : array
     {
-        return [
-            'searchInput' => 'What are you looking for?',
-        ];
+        return ['searchInput' => 'What are you looking for?'];
     }
-
-
 }

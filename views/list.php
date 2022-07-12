@@ -6,7 +6,6 @@ use Alireza\Untitled\core\form\Form;
 use Alireza\Untitled\models\ListModel;
 use Alireza\Untitled\models\User;
 
-
 /** @var ListModel $model **/
 
 echo $form = Form::begin('', 'get') ?>
@@ -52,14 +51,37 @@ echo $form = Form::begin('', 'get') ?>
                     '<th>'.
                         $inscription["subject"].
                     '</th>'.
-                '<th><a href="/profile?=$author_id">'. $author->firstname. '</a></th>'.
-                '<th>'. $inscription["content"]. '</th>'.
-                '<th>'. "<a href=\"view?id=$id\"><span>&#9956;</span></a><a href=\"edit?id=$id\"><span>&#9999;</span></a><a href=\"delete?id=$id\"><span>&#9940;</span></a>". '</th>'.
+                    '<th>'.
+                        "<a href=\"profile?id=$author_id\">".
+                            $author->firstname.
+                        '</a>'.
+                    '</th>'.
+                    '<th>'.
+                        $inscription["content"].
+                    '</th>'.
+                    '<th>'.
+                        "<a href=\"view?id=$id\">
+                            <span>
+                                &#9956;
+                            </span>
+                         </a>
+                         <a href=\"edit?id=$id\">
+                            <span>
+                                &#9999;
+                            </span>
+                         </a>
+                         <a href=\"delete?id=$id\">
+                            <span>
+                                &#9940;
+                            </span>
+                         </a>".
+                    '</th>'.
                 '</tr>';
         }
     ?>
     </tbody>
 </table>
 <div>
-    <?php for($i=0; 5 * $i < count($inscriptions); $i++) echo "<a href='/list?page=$i&searchInput=$searchInput' > $i </a>"; ?>
+    <?php for($i=0; 5 * $i < count($inscriptions); $i++)
+        echo "<a href='/list?page=$i&searchInput=$searchInput'> $i </a>"; ?>
 </div>

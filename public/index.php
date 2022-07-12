@@ -37,7 +37,6 @@ $app->router->get('/view', [BlogController::class, 'view']);
 $app->router->get('/edit', [BlogController::class, 'edit']);
 $app->router->post('/edit', [BlogController::class, 'edit']);
 
-
 $app->router->get('/profile', [BlogController::class, 'profile']);
 
 $app -> run();
